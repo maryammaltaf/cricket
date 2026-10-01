@@ -1,0 +1,946 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#176139">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="CWC 2027 Trip">
+<meta name="description" content="Our trip to the 2027 Cricket World Cup in South Africa.">
+<meta property="og:title" content="Cricket World Cup 2027 Trip">
+<meta property="og:description" content="Pakistan v India under Table Mountain. Will you take me?">
+<meta property="og:image" content="img/hero.jpg">
+<link rel="apple-touch-icon" href="img/hero.jpg">
+<title>Cricket World Cup 2027 Trip</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800;900&family=Figtree:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+[hidden]{display:none!important}
+html{padding-top:env(safe-area-inset-top,0px)}
+/* Layout: full-bleed stadium hero with a scoreboard countdown, then a planner rail
+   (options -> controls) above a plan that reads like a matchday programme:
+   ticket stubs, flights, hotels, day-by-day, money. */
+:root{
+  --bg:#F4F7F2; --surface:#FFFFFF; --surface-2:#EAF0E8; --ink:#0F2419; --muted:#5B6D62; --line:#D9E2D7;
+  --pitch:#176139; --pitch-ink:#FFFFFF; --pitch-soft:#E1EEE4;
+  --gold:#B97D0C; --gold-bright:#E3A42A; --gold-soft:#FBF0D4;
+  --sky:#2A6A9E; --sky-soft:#E2EEF7; --warn:#A6461F; --warn-soft:#FBE9E0;
+  --shadow:0 1px 2px rgba(15,36,25,.06),0 8px 24px rgba(15,36,25,.07);
+  --f-display:"Big Shoulders Display","Arial Narrow",Impact,sans-serif;
+  --f-body:"Figtree",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --r:14px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0B1510; --surface:#12201A; --surface-2:#182A21; --ink:#E8F1EA; --muted:#9BAFA2; --line:#253A2E;
+  --pitch:#5BC387; --pitch-ink:#08130D; --pitch-soft:#173526;
+  --gold:#F0B84A; --gold-bright:#F0B84A; --gold-soft:#372B10;
+  --sky:#7DB6E4; --sky-soft:#15293A; --warn:#F09A72; --warn-soft:#3A2117;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.35); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0B1510; --surface:#12201A; --surface-2:#182A21; --ink:#E8F1EA; --muted:#9BAFA2; --line:#253A2E;
+  --pitch:#5BC387; --pitch-ink:#08130D; --pitch-soft:#173526;
+  --gold:#F0B84A; --gold-bright:#F0B84A; --gold-soft:#372B10;
+  --sky:#7DB6E4; --sky-soft:#15293A; --warn:#F09A72; --warn-soft:#3A2117;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.35); color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.55;margin:0;overflow-x:clip;-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:transparent}
+a{color:var(--pitch)}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;line-height:1;margin:0;letter-spacing:.01em}
+h2{font-size:clamp(2.1rem,5vw,3.2rem);font-weight:800;text-transform:uppercase}
+h3{font-size:1.45rem;font-weight:800;text-transform:uppercase}
+p{margin:0}
+.wrap{max-width:1180px;margin:0 auto;padding-inline:20px}
+.eyebrow{font-family:var(--f-mono);font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:700}
+.num{font-variant-numeric:tabular-nums}
+.mono{font-family:var(--f-mono)}
+section{padding-block:56px}
+.sec-head{display:flex;flex-wrap:wrap;gap:12px 32px;align-items:end;justify-content:space-between;margin-bottom:26px}
+.sec-head p{max-width:60ch;color:var(--muted)}
+button{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--gold-bright);outline-offset:2px;border-radius:6px}
+img{max-width:100%;display:block}
+.flag{width:28px;height:21px;border-radius:3px;object-fit:cover;box-shadow:0 0 0 1px rgba(0,0,0,.12);flex:none}
+.flag.lg{width:54px;height:40px;border-radius:5px}
+.flag.q{display:inline-grid;place-items:center;background:var(--surface-2);color:var(--muted);font:700 .7rem var(--f-mono)}
+.flag.lg.q{font-size:.9rem}
+
+/* HERO */
+.hero{position:relative;color:#fff;overflow:hidden;background:#0d1f15}
+.hero img.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 40%;max-width:none}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,20,12,.15) 0%,rgba(6,20,12,.35) 45%,rgba(6,20,12,.92) 100%)}
+.hero .wrap{position:relative;z-index:1;padding-block:110px 40px;display:grid;gap:28px}
+.hero .kicker{font-family:var(--f-mono);font-size:.78rem;letter-spacing:.16em;text-transform:uppercase;display:flex;flex-wrap:wrap;gap:8px 16px;opacity:.92}
+.hero h1{font-size:clamp(3.1rem,10vw,7.4rem);font-weight:900;text-transform:uppercase;line-height:.88;max-width:12ch;text-shadow:0 2px 30px rgba(0,0,0,.35)}
+.hero h1 .gold{color:#F4BE4F}
+.hero .lede{font-size:clamp(1.05rem,2.2vw,1.3rem);max-width:56ch;opacity:.95}
+.board{display:flex;flex-wrap:wrap;gap:14px;align-items:stretch}
+.score{background:rgba(5,14,9,.72);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.14);border-radius:12px;padding:14px 18px;display:grid;gap:6px;min-width:0}
+.score .lbl{font-family:var(--f-mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:#B9CDBF}
+.score .teams{display:flex;align-items:center;gap:10px;font-family:var(--f-display);font-weight:800;font-size:1.6rem;text-transform:uppercase}
+.cd{display:flex;gap:8px}
+.cd div{background:#020805;border-radius:8px;padding:6px 10px;text-align:center;min-width:62px}
+.cd b{display:block;font-family:var(--f-mono);font-size:1.7rem;color:#F4BE4F;line-height:1.1}
+.cd span{font-family:var(--f-mono);font-size:.62rem;letter-spacing:.12em;color:#9DB4A5;text-transform:uppercase}
+.hero .credit{font-size:.7rem;opacity:.6}
+
+/* GALLERY */
+.gallery{display:grid;grid-template-columns:repeat(12,1fr);grid-auto-rows:150px;gap:10px}
+.gallery figure{margin:0;position:relative;border-radius:12px;overflow:hidden;background:var(--surface-2)}
+.gallery img{width:100%;height:100%;object-fit:cover;transition:transform .6s ease}
+.gallery figure:hover img{transform:scale(1.04)}
+.gallery figcaption{position:absolute;left:0;right:0;bottom:0;padding:22px 12px 9px;background:linear-gradient(transparent,rgba(0,0,0,.72));color:#fff;font-size:.86rem;font-weight:600}
+.gallery figcaption small{display:block;font-weight:400;opacity:.85;font-size:.76rem}
+.g1{grid-column:span 6;grid-row:span 2}.g2{grid-column:span 3;grid-row:span 2}.g3{grid-column:span 3}.g4{grid-column:span 3}
+.g5{grid-column:span 4;grid-row:span 2}.g6{grid-column:span 4}.g7{grid-column:span 4}.g8{grid-column:span 4}.g9{grid-column:span 4}
+@media (max-width:760px){.gallery{grid-template-columns:repeat(2,1fr);grid-auto-rows:130px}.gallery figure{grid-column:span 1!important;grid-row:span 1!important}.gallery .g1{grid-column:span 2!important;grid-row:span 2!important}}
+
+/* OPTION PICKER */
+.opts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+@media (max-width:980px){.opts{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:520px){.opts{grid-template-columns:1fr}}
+.opt{background:var(--surface);border:2px solid var(--line);border-radius:var(--r);padding:16px;text-align:left;cursor:pointer;display:grid;gap:12px;align-content:start;transition:border-color .2s,transform .2s,box-shadow .2s;min-width:0}
+.opt:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
+.opt[aria-pressed="true"]{border-color:var(--pitch);box-shadow:var(--shadow);background:linear-gradient(var(--pitch-soft),var(--surface) 70%)}
+.opt .top{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.opt .no{font-family:var(--f-display);font-weight:900;font-size:2.4rem;line-height:.8;color:var(--pitch)}
+.opt h3{font-size:1.3rem}
+.opt .desc{font-size:.88rem;color:var(--muted)}
+.mrow{display:flex;align-items:center;gap:8px;font-size:.84rem;font-weight:600}
+.mrow .vs{font-family:var(--f-mono);font-size:.7rem;color:var(--muted)}
+.mrow .d{margin-left:auto;font-family:var(--f-mono);font-size:.72rem;color:var(--muted);white-space:nowrap}
+.mlist{display:grid;gap:7px;padding-top:10px;border-top:1px dashed var(--line)}
+.pill{display:inline-flex;align-items:center;gap:6px;font-family:var(--f-mono);font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;font-weight:700;padding:4px 8px;border-radius:999px;white-space:nowrap}
+.pill.sure{background:var(--pitch-soft);color:var(--pitch)}
+.pill.maybe{background:var(--gold-soft);color:var(--gold)}
+.pill.info{background:var(--sky-soft);color:var(--sky)}
+.opt .price{font-family:var(--f-mono);font-size:.8rem;color:var(--muted)}
+.opt .price b{font-size:1rem;color:var(--ink)}
+
+/* CONTROL BAR */
+.controls{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);background:color-mix(in srgb,var(--bg) 88%,transparent);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);margin-top:26px}
+.controls .wrap{display:flex;flex-wrap:wrap;gap:10px 22px;align-items:center;padding-block:12px}
+.ctl{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.ctl > .eyebrow{font-size:.66rem}
+.seg{display:inline-flex;background:var(--surface-2);border-radius:999px;padding:3px;gap:2px;flex-wrap:wrap}
+.seg button{border:0;background:transparent;padding:6px 13px;border-radius:999px;cursor:pointer;font-weight:600;font-size:.86rem;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.stepper{display:inline-flex;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:999px}
+.stepper button{border:0;background:transparent;width:36px;height:36px;font-size:1.2rem;cursor:pointer;border-radius:999px;color:var(--pitch);font-weight:700}
+.stepper button:disabled{color:var(--line);cursor:not-allowed}
+.stepper output{min-width:86px;text-align:center;font-family:var(--f-mono);font-weight:700;font-size:.9rem}
+.minnote{font-size:.78rem;color:var(--muted)}
+.total-chip{margin-left:auto;display:flex;gap:8px;align-items:baseline;font-family:var(--f-mono)}
+.total-chip b{font-size:1.15rem}
+@media (max-width:760px){.total-chip{margin-left:0}}
+
+/* VARIANT PICKER (option 1) */
+.variant{margin-top:22px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px;display:grid;gap:14px}
+.vgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.vbtn{border:1.5px solid var(--line);background:var(--bg);border-radius:12px;padding:12px;cursor:pointer;text-align:left;display:grid;gap:6px;min-width:0}
+.vbtn[aria-pressed="true"]{border-color:var(--gold);background:var(--gold-soft)}
+.vbtn .mrow{font-size:.9rem}
+.vbtn small{color:var(--muted);font-size:.78rem}
+
+/* PLAN SUMMARY */
+.summary{display:grid;grid-template-columns:1.3fr 1fr;gap:18px;margin-top:6px}
+@media (max-width:860px){.summary{grid-template-columns:1fr}}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:20px;min-width:0}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:16px 20px;margin-top:16px}
+.fact .v{font-family:var(--f-display);font-weight:800;font-size:1.65rem;line-height:1.05}
+.fact .k{font-size:.78rem;color:var(--muted)}
+.route{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-top:16px;font-weight:600;font-size:.92rem}
+.route .stop{background:var(--surface-2);padding:5px 10px;border-radius:999px}
+.route .arr{color:var(--muted);font-family:var(--f-mono)}
+.alert{display:flex;gap:10px;padding:12px 14px;border-radius:12px;font-size:.9rem;margin-top:14px}
+.alert.warn{background:var(--warn-soft);color:var(--ink)}
+.alert.warn b{color:var(--warn)}
+.alert.ok{background:var(--pitch-soft)}
+.alert.gold{background:var(--gold-soft)}
+
+/* TICKETS */
+.tickets{display:grid;gap:16px}
+.ticket{display:grid;grid-template-columns:minmax(0,1fr) 210px;background:var(--surface);border-radius:var(--r);box-shadow:var(--shadow);overflow:hidden;position:relative;border:1px solid var(--line)}
+.ticket .main{display:grid;grid-template-columns:200px minmax(0,1fr);min-width:0}
+.ticket .pic{position:relative;min-height:170px}
+.ticket .pic img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.ticket .body{padding:18px 20px;display:grid;gap:10px;align-content:center;min-width:0}
+.ticket .vsrow{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.ticket .vsrow .nm{font-family:var(--f-display);font-weight:900;font-size:clamp(1.6rem,3.4vw,2.3rem);text-transform:uppercase;line-height:1}
+.ticket .vsrow .v{font-family:var(--f-mono);color:var(--muted);font-size:.9rem}
+.ticket .meta{font-size:.9rem;color:var(--muted)}
+.ticket .stub{border-left:2px dashed var(--line);padding:18px;display:grid;align-content:center;gap:4px;background:var(--gold-soft);position:relative}
+.ticket .stub::before,.ticket .stub::after{content:"";position:absolute;left:-11px;width:20px;height:20px;border-radius:50%;background:var(--bg)}
+.ticket .stub::before{top:-10px}.ticket .stub::after{bottom:-10px}
+.stub .day{font-family:var(--f-mono);font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);font-weight:700}
+.stub .date{font-family:var(--f-display);font-weight:900;font-size:2.6rem;line-height:.9}
+.stub .p{font-family:var(--f-mono);font-size:.76rem;color:var(--muted)}
+@media (max-width:760px){.ticket{grid-template-columns:1fr}.ticket .main{grid-template-columns:1fr}.ticket .pic{min-height:150px}.ticket .stub{border-left:0;border-top:2px dashed var(--line)}.ticket .stub::before,.ticket .stub::after{display:none}}
+
+/* FLIGHTS */
+.flights{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+.leg{display:grid;gap:10px}
+.leg .path{display:flex;align-items:center;gap:10px;font-family:var(--f-display);font-weight:800;font-size:1.9rem;text-transform:uppercase}
+.leg .path .line{flex:1;height:2px;background:repeating-linear-gradient(90deg,var(--muted) 0 6px,transparent 6px 12px);position:relative;min-width:30px}
+.leg .path .line::after{content:"✈";position:absolute;right:-2px;top:-12px;font-size:1rem;color:var(--sky)}
+.leg dl{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;margin:0;font-size:.9rem}
+.leg dt{color:var(--muted)}
+.leg dd{margin:0;font-weight:600}
+.links{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:999px;font-weight:600;font-size:.86rem;text-decoration:none;border:1.5px solid var(--pitch);color:var(--pitch);background:transparent;cursor:pointer}
+.btn.solid{background:var(--pitch);color:var(--pitch-ink)}
+.btn:hover{filter:brightness(1.05)}
+
+/* HOTELS */
+.citybar{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 16px;margin:28px 0 12px}
+.citybar h3{font-size:1.7rem}
+.citybar .mono{color:var(--muted);font-size:.8rem}
+.hotels{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+@media (max-width:900px){.hotels{grid-template-columns:1fr}}
+.hotel{background:var(--surface);border:2px solid var(--line);border-radius:var(--r);overflow:hidden;display:grid;grid-template-rows:auto 1fr;transition:border-color .2s,opacity .2s}
+.hotel.on{border-color:var(--pitch)}
+.hotel.dim{opacity:.55}
+.hotel .ph{position:relative;aspect-ratio:16/10;max-width:100%}
+.hotel .ph img{width:100%;height:100%;object-fit:cover}
+.hotel .tier{position:absolute;top:10px;left:10px;background:var(--surface);color:var(--ink);font-family:var(--f-mono);font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:4px 9px;border-radius:999px}
+.hotel .score-b{position:absolute;top:10px;right:10px;background:#003B95;color:#fff;font-weight:700;font-size:.9rem;padding:5px 8px;border-radius:8px 8px 8px 0}
+.hotel .hb{padding:14px 16px;display:grid;gap:8px;align-content:start}
+.hotel .nm{font-weight:700;font-size:1.05rem;line-height:1.25}
+.hotel .area{font-size:.84rem;color:var(--muted)}
+.hotel .perks{font-size:.84rem}
+.hotel .pr{display:flex;justify-content:space-between;align-items:end;gap:10px;margin-top:4px;flex-wrap:wrap}
+.hotel .pr .n{font-family:var(--f-mono);font-size:.78rem;color:var(--muted)}
+.hotel .pr b{font-family:var(--f-mono);font-size:1.1rem;display:block;color:var(--ink)}
+.hotel .sel{font-size:.78rem;font-weight:700;color:var(--pitch)}
+
+/* ITINERARY */
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1.5px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 13px;font-weight:600;font-size:.86rem;cursor:pointer;display:inline-flex;gap:7px;align-items:center}
+.chip[aria-pressed="true"]{border-color:var(--ink);background:var(--ink);color:var(--bg)}
+.chip .dot{width:9px;height:9px;border-radius:50%}
+.t-match{--tc:var(--gold)}.t-travel{--tc:var(--sky)}.t-sight{--tc:var(--pitch)}.t-free{--tc:var(--muted)}
+.days{display:grid;gap:12px;margin-top:20px}
+.day{display:grid;grid-template-columns:96px minmax(0,1fr) 220px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;border-left:6px solid var(--tc)}
+.day .when{padding:16px 10px;text-align:center;border-right:1px solid var(--line);display:grid;align-content:center;gap:2px}
+.day .when .n{font-family:var(--f-mono);font-size:.68rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase}
+.day .when .dd{font-family:var(--f-display);font-weight:900;font-size:2.3rem;line-height:.9}
+.day .when .mm{font-family:var(--f-mono);font-size:.74rem;font-weight:700;text-transform:uppercase}
+.day .what{padding:16px 18px;display:grid;gap:6px;align-content:center;min-width:0}
+.day .what .tt{font-weight:700;font-size:1.06rem;display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.day .what p{color:var(--muted);font-size:.92rem;max-width:68ch}
+.day .what .tag{font-family:var(--f-mono);font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;font-weight:700;color:var(--tc)}
+.day .what .sleep{font-size:.8rem;color:var(--muted)}
+.day .ph{position:relative;min-height:120px}
+.day .ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.day.extra{border-style:dashed;border-left-style:solid}
+@media (max-width:760px){.day{grid-template-columns:74px minmax(0,1fr)}.day .ph{display:none}.day .when .dd{font-size:1.9rem}}
+
+/* MONEY */
+.money{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:18px}
+@media (max-width:860px){.money{grid-template-columns:1fr}}
+.bar{display:flex;height:16px;border-radius:999px;overflow:hidden;margin:16px 0 18px;background:var(--surface-2)}
+.bar span{display:block;height:100%}
+.costs{width:100%;border-collapse:collapse;font-size:.94rem}
+.costs td{padding:9px 0;border-bottom:1px solid var(--line);vertical-align:top}
+.costs td:last-child{text-align:right;font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap;padding-left:12px}
+.costs .sw{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:8px}
+.costs small{display:block;color:var(--muted);font-size:.78rem}
+.costs tr.tot td{border-bottom:0;font-weight:700;font-size:1.1rem;padding-top:14px}
+.big{font-family:var(--f-display);font-weight:900;font-size:clamp(2.4rem,6vw,3.6rem);line-height:.95}
+
+/* COMPARE */
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r);background:var(--surface)}
+table.cmp{width:100%;border-collapse:collapse;min-width:760px;font-size:.92rem}
+.cmp th,.cmp td{padding:14px 16px;text-align:left;border-bottom:1px solid var(--line);vertical-align:middle}
+.cmp th{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:700}
+.cmp tbody tr{cursor:pointer}
+.cmp tbody tr:hover{background:var(--surface-2)}
+.cmp tr.cur{background:var(--pitch-soft)}
+.cmp td.r{text-align:right;font-family:var(--f-mono);white-space:nowrap}
+.cmp .flags{display:flex;gap:4px;align-items:center;flex-wrap:wrap}
+
+/* TIMELINE */
+.tl{display:grid;gap:0;position:relative}
+.tl .st{display:grid;grid-template-columns:150px 28px minmax(0,1fr);gap:0 14px;padding-bottom:22px}
+.tl .st .wh{font-family:var(--f-mono);font-size:.78rem;font-weight:700;text-align:right;padding-top:2px}
+.tl .st .dot{position:relative;display:flex;justify-content:center}
+.tl .st .dot::before{content:"";position:absolute;top:18px;bottom:-22px;width:2px;background:var(--line)}
+.tl .st:last-child .dot::before{display:none}
+.tl .st .dot i{width:16px;height:16px;border-radius:50%;border:3px solid var(--pitch);background:var(--surface);margin-top:2px;position:relative}
+.tl .st.now .dot i{background:var(--pitch)}
+.tl .st b{display:block}
+.tl .st p{color:var(--muted);font-size:.92rem}
+@media (max-width:600px){.tl .st{grid-template-columns:22px minmax(0,1fr)}.tl .st .wh{grid-column:2;text-align:left;order:-1}.tl .st .dot{grid-row:1/span 2;grid-column:1}}
+
+/* ESSENTIALS */
+.ess{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px}
+.ess .card h3{font-size:1.25rem;margin-bottom:8px}
+.ess .card p,.ess .card li{font-size:.92rem;color:var(--muted)}
+.ess .card ul{margin:0;padding-left:18px;display:grid;gap:4px}
+.ess .card .k{color:var(--ink);font-weight:600}
+
+footer{border-top:1px solid var(--line);padding-block:30px 50px;font-size:.84rem;color:var(--muted)}
+footer ul{padding-left:18px;display:grid;gap:4px}
+.alt{background:var(--surface-2)}
+
+/* ---------- PHONE (iPhone 13 Pro = 390 x 844) ---------- */
+.swipe,.mbar,.cmp-cards{display:none}
+@media (max-width:640px){
+  section{padding-block:40px}
+  .wrap{padding-inline:16px}
+  .sec-head{margin-bottom:18px}
+  .sec-head p{font-size:.95rem}
+  .hero .wrap{padding-block:88px 26px;gap:18px}
+  .hero h1{font-size:clamp(2.8rem,14vw,3.6rem)}
+  .hero .kicker{font-size:.68rem;gap:4px 12px}
+  .board{display:grid;grid-template-columns:1fr;gap:10px}
+  .score{padding:12px 14px}
+  .cd{gap:6px}.cd div{flex:1;min-width:0;padding:6px 4px}.cd b{font-size:1.45rem}
+  .swipe{display:block;font-family:var(--f-mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:-6px 0 10px}
+  .opts,.vgrid,.hotels{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;gap:12px;margin-inline:-16px;padding:4px 16px 14px;scroll-padding-inline:16px}
+  .opts::-webkit-scrollbar,.vgrid::-webkit-scrollbar,.hotels::-webkit-scrollbar{display:none}
+  .opt{flex:0 0 84%;scroll-snap-align:start}
+  .vbtn{flex:0 0 72%;scroll-snap-align:start}
+  .hotel{flex:0 0 86%;scroll-snap-align:start}
+  .hotels[style]{display:grid}
+  .variant{padding:14px}
+  .controls{position:static;background:var(--bg);margin-top:16px}
+  .controls .wrap{gap:12px 16px}
+  .total-chip{display:none}
+  .seg button{padding:8px 14px}
+  .chip{padding:8px 14px}
+  .summary h2{font-size:2rem!important}
+  .facts{grid-template-columns:1fr 1fr;gap:14px}
+  .fact .v{font-size:1.4rem}
+  .ticket .vsrow{gap:8px}.ticket .vsrow .nm{font-size:1.45rem}
+  .flag.lg{width:40px;height:30px}
+  .ticket .body{padding:16px}
+  .leg .path{font-size:1.5rem}
+  .citybar h3{font-size:1.4rem}
+  .day .when{padding:12px 6px}
+  .day .what{padding:14px}
+  .day .what p{font-size:.88rem}
+  .money .card{padding:16px}
+  .tablewrap{display:none}
+  .cmp-cards{display:grid;gap:10px}
+  .cmp-card{background:var(--surface);border:1.5px solid var(--line);border-radius:var(--r);padding:14px;display:grid;gap:8px;text-align:left;cursor:pointer;width:100%}
+  .cmp-card.cur{border-color:var(--pitch);background:var(--pitch-soft)}
+  .cmp-card .r1{display:flex;justify-content:space-between;align-items:center;gap:8px}
+  .cmp-card .r2{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:.85rem;color:var(--muted)}
+  .cmp-card .t{font-family:var(--f-mono);font-weight:700;color:var(--ink)}
+  .mbar{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:40;align-items:center;gap:10px;justify-content:space-between;
+    padding:10px 16px calc(10px + env(safe-area-inset-bottom,0px));background:var(--surface);border-top:1px solid var(--line);box-shadow:0 -6px 20px rgba(0,0,0,.08)}
+  .mbar .stepper output{min-width:64px;font-size:.82rem}
+  .mbar .stepper button{width:40px;height:40px}
+  .mbar .tot{display:grid;line-height:1.15;text-align:right}
+  .mbar .tot b{font-family:var(--f-mono);font-size:1rem}
+  .mbar .tot span{font-size:.68rem;color:var(--muted);font-family:var(--f-mono);text-transform:uppercase;letter-spacing:.08em}
+  body{padding-bottom:calc(68px + env(safe-area-inset-bottom,0px))}
+  html.locked body{padding-bottom:0}
+}
+
+/* ---------- WELCOME POPUP ---------- */
+html.locked,html.locked body{overflow:hidden;height:100%}
+.gate{position:fixed;inset:0;z-index:100;display:grid;place-items:center;padding:calc(20px + env(safe-area-inset-top,0px)) 18px calc(20px + env(safe-area-inset-bottom,0px));
+  background:radial-gradient(circle at 50% 30%,rgba(23,97,57,.55),rgba(5,14,9,.92)),url(img/camps_bay.jpg) center/cover;transition:opacity .5s ease}
+.gate.out{opacity:0;pointer-events:none}
+.gate .box{width:min(420px,100%);background:var(--surface);color:var(--ink);border-radius:26px;padding:28px 22px 22px;text-align:center;display:grid;gap:14px;
+  box-shadow:0 30px 80px rgba(0,0,0,.45);position:relative;overflow:hidden;animation:pop .45s cubic-bezier(.2,1.4,.4,1)}
+.gate .box::before{content:"";position:absolute;inset:0 0 auto 0;height:8px;background:linear-gradient(90deg,#176139,#E3A42A,#E26D8E,#176139)}
+.gate .emo{font-size:3.6rem;line-height:1;animation:bob 1.6s ease-in-out infinite}
+.gate h2{font-size:clamp(1.9rem,8vw,2.4rem);text-transform:none;line-height:1.02}
+.gate p{color:var(--muted);font-size:1rem}
+.gate .btns{display:grid;gap:10px;margin-top:6px}
+.gate button{border:0;border-radius:999px;padding:15px 18px;font-weight:700;font-size:1.02rem;cursor:pointer;transition:transform .25s cubic-bezier(.2,1.4,.4,1),font-size .25s}
+.gate .yes{background:linear-gradient(135deg,#1E7A49,#176139);color:#fff;box-shadow:0 10px 24px rgba(23,97,57,.35)}
+.gate .no{background:transparent;color:var(--muted);font-weight:600;text-decoration:underline;text-underline-offset:3px}
+.gate .tiny{font-size:.72rem;color:var(--muted);font-family:var(--f-mono)}
+.gate .bye h2{font-size:clamp(3rem,16vw,4.6rem);font-weight:900;text-transform:uppercase;background:linear-gradient(90deg,#FF4FA3,#FFB13B,#FFE45C,#4FE3A0,#4FA8FF,#B06BFF,#FF4FA3);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shimmer 2.5s linear infinite}
+.gate .bye{background:radial-gradient(circle at 50% 0%,#FFE3F1,var(--surface) 60%)}
+.burst{position:fixed;inset:0;pointer-events:none;z-index:110;overflow:hidden}
+.burst span{position:absolute;font-size:1.6rem;animation:fly 1.8s ease-out forwards}
+.burst.rain span{animation:rain 3.2s linear infinite}
+@keyframes pop{from{transform:scale(.7);opacity:0}to{transform:none;opacity:1}}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@keyframes shimmer{to{background-position:200% 0}}
+@keyframes fly{0%{transform:translate(0,0) scale(.4);opacity:1}100%{transform:translate(var(--x),var(--y)) scale(1.2) rotate(var(--r));opacity:0}}
+@keyframes rain{0%{transform:translateY(-10vh) rotate(0)}100%{transform:translateY(110vh) rotate(360deg)}}
+@keyframes shake{0%,100%{transform:none}25%{transform:translateX(-8px) rotate(-1deg)}75%{transform:translateX(8px) rotate(1deg)}}
+.gate .box.shake{animation:shake .4s ease}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .gate .bye{background:radial-gradient(circle at 50% 0%,#3A1830,var(--surface) 60%)}}
+:root[data-theme="dark"] .gate .bye{background:radial-gradient(circle at 50% 0%,#3A1830,var(--surface) 60%)}
+
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+.fade{animation:fade .35s ease}
+@keyframes fade{from{opacity:.4;transform:translateY(4px)}to{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+
+<div class="gate" id="gate" role="dialog" aria-modal="true" aria-labelledby="gateTitle">
+  <div class="box" id="gateBox"></div>
+</div>
+<header class="hero">
+  <img class="bg" src="img/hero.jpg" alt="Newlands Cricket Ground in Cape Town with the mountains behind the stands">
+  <div class="wrap">
+    <div class="kicker"><span>ICC Men's Cricket World Cup 2027</span><span>South Africa · Zimbabwe · Namibia</span><span>Karachi → South Africa, for two</span></div>
+    <h1>Pakistan v India <span class="gold">under Table Mountain</span></h1>
+    <p class="lede">Maryam &amp; husband's World Cup trip. Four ways to do it, with real fixtures, Booking.com hotels, flights from Karachi and a day-by-day plan. Pick one below and the whole page re-plans itself.</p>
+    <div class="board">
+      <div class="score">
+        <span class="lbl" id="cdLabel">Next big one</span>
+        <div class="teams" id="cdTeams"></div>
+        <span class="lbl" id="cdWhere"></span>
+      </div>
+      <div class="score">
+        <span class="lbl">Countdown to first ball</span>
+        <div class="cd" id="cd"></div>
+        <span class="lbl">Start time TBC · shown at 10:00 SAST</span>
+      </div>
+    </div>
+    <p class="credit">Photo: Newlands, Cape Town · Wikimedia Commons</p>
+  </div>
+</header>
+
+<main>
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <div><p class="eyebrow">Why go</p><h2>Cricket, then the Cape</h2></div>
+      <p>October and November are South African spring: long sunny days, wildflowers, whales still off the coast and jacaranda season in Pretoria. Between matches you get a coastline that easily matches anything on the Vietnam list.</p>
+    </div>
+    <div class="gallery">
+      <figure class="g1"><img src="img/table_mountain.jpg" alt="Table Mountain over Cape Town" loading="lazy"><figcaption>Table Mountain<small>Cable car to the top, Cape Town</small></figcaption></figure>
+      <figure class="g2"><img src="img/boulders.jpg" alt="Penguins on Boulders Beach" loading="lazy"><figcaption>Boulders Beach<small>Walk among wild African penguins</small></figcaption></figure>
+      <figure class="g3"><img src="img/camps_bay.jpg" alt="Camps Bay" loading="lazy"><figcaption>Camps Bay<small>Sunset dinners</small></figcaption></figure>
+      <figure class="g4"><img src="img/cape_point.jpg" alt="Cape of Good Hope" loading="lazy"><figcaption>Cape of Good Hope<small>Africa's south-western tip</small></figcaption></figure>
+      <figure class="g5"><img src="img/chapmans.jpg" alt="Chapman's Peak Drive" loading="lazy"><figcaption>Chapman's Peak Drive<small>Cliff road above the Atlantic</small></figcaption></figure>
+      <figure class="g6"><img src="img/bokaap.jpg" alt="Bo-Kaap houses" loading="lazy"><figcaption>Bo-Kaap<small>Cape Malay quarter, halal food</small></figcaption></figure>
+      <figure class="g7"><img src="img/pilanesberg.jpg" alt="Giraffes in Pilanesberg" loading="lazy"><figcaption>Pilanesberg safari<small>Day trip from Johannesburg</small></figcaption></figure>
+      <figure class="g8"><img src="img/knysna.jpg" alt="Knysna waterfront" loading="lazy"><figcaption>Knysna<small>Garden Route lagoon town</small></figcaption></figure>
+      <figure class="g9"><img src="img/franschhoek.jpg" alt="Franschhoek valley" loading="lazy"><figcaption>Franschhoek<small>Mountains, farms, French food</small></figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section class="alt" id="plan" style="padding-bottom:0">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><p class="eyebrow">Step 1 · Choose your trip</p><h2>Four ways to do it</h2></div>
+      <p>Fixtures are from the official ICC schedule released on 1 October 2026. Prices on each card are for both of you, at the hotel level you pick below.</p>
+    </div>
+    <p class="swipe">Swipe to see all four →</p>
+    <div class="opts" id="opts" role="group" aria-label="Trip options"></div>
+    <div class="variant" id="variant"></div>
+  </div>
+  <div class="controls" id="controls">
+    <div class="wrap">
+      <div class="ctl"><span class="eyebrow">Nights</span>
+        <div class="stepper"><button id="nMinus" aria-label="One night fewer">−</button><output id="nOut" aria-live="polite"></output><button id="nPlus" aria-label="One night more">+</button></div>
+        <span class="minnote" id="minNote"></span></div>
+      <div class="ctl"><span class="eyebrow">Hotels</span><div class="seg" id="tierSeg"></div></div>
+      <div class="ctl"><span class="eyebrow">Currency</span><div class="seg" id="curSeg"></div></div>
+      <div class="total-chip"><span class="eyebrow">Total for 2</span><b id="chipTotal" class="num"></b></div>
+    </div>
+  </div>
+</section>
+
+<section id="overview">
+  <div class="wrap">
+    <div class="summary" id="summary"></div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head"><div><p class="eyebrow">Step 2 · Matches</p><h2>Your tickets</h2></div>
+      <p>Tickets are sold only through the official ICC ballot at tickets.cricketworldcup.com. Booking.com does not sell match tickets. Launch prices run from USD 9.62 to USD 31.31 per seat; premium seats and hospitality cost more.</p></div>
+    <div class="tickets" id="tickets"></div>
+    <div class="links" style="margin-top:16px"><a class="btn solid" href="https://tickets.cricketworldcup.com/" target="_blank" rel="noopener">Enter the ICC ticket ballot</a><a class="btn" href="https://www.icc-cricket.com/tournaments/icc-cricket-world-cup-2027/news/fixture-schedule-announced-for-icc-men-s-cricket-world-cup-2027" target="_blank" rel="noopener">Full ICC schedule</a></div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="wrap">
+    <div class="sec-head"><div><p class="eyebrow">Step 3 · Getting there</p><h2>Flights</h2></div>
+      <p>There is no direct flight from Karachi; every route connects once (Dubai, Doha, Addis Ababa or Istanbul). Booking.com Flights isn't offered in Pakistan, so fares here are estimates from current Karachi–South Africa prices plus a World Cup bump. Fares for late 2027 open around 11 months ahead.</p></div>
+    <div class="flights" id="flights"></div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head"><div><p class="eyebrow">Step 4 · Where you sleep</p><h2>Hotels from Booking.com</h2></div>
+      <p>Live prices pulled from Booking.com on 1 October 2026 for two adults, converted to a nightly rate. Each "Check on Booking.com" button opens the hotel with your exact dates filled in.</p></div>
+    <div class="chips" id="hotelFilter" role="group" aria-label="Hotel filter"></div>
+    <div id="hotels"></div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="wrap">
+    <div class="sec-head"><div><p class="eyebrow">Step 5 · Day by day</p><h2>The itinerary</h2></div>
+      <p>Matchdays are fixed. Extra nights you add with the stepper appear as dashed days at the end, ready for more sightseeing.</p></div>
+    <div class="chips" id="dayFilter" role="group" aria-label="Filter days"></div>
+    <div class="days" id="days"></div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head"><div><p class="eyebrow">Step 6 · Money</p><h2>What it costs</h2></div>
+      <p>Everything for two people. Flights and daily spending are estimates; hotel figures are the Booking.com snapshot. USD 1 = PKR 277 (1 Oct 2026).</p></div>
+    <div class="money" id="money"></div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="wrap">
+    <div class="sec-head"><div><p class="eyebrow">Side by side</p><h2>Compare the four</h2></div>
+      <p>Default nights for each option at your chosen hotel level. Tap a row to switch to it.</p></div>
+    <div class="tablewrap"><table class="cmp"><thead><tr><th>Option</th><th>Matches</th><th>Dates</th><th>Nights</th><th>Cities</th><th>Certainty</th><th style="text-align:right">Total for 2</th></tr></thead><tbody id="cmpBody"></tbody></table></div>
+    <div class="cmp-cards" id="cmpCards"></div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head"><div><p class="eyebrow">Booking plan</p><h2>What to do, and when</h2></div>
+      <p>The order matters: tickets and refundable hotels first, flights when they open, visas last because South Africa wants recent bank statements.</p></div>
+    <div class="tl" id="timeline"></div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="wrap">
+    <div class="sec-head"><div><p class="eyebrow">Good to know</p><h2>Essentials</h2></div></div>
+    <div class="ess">
+      <div class="card"><h3>Visa</h3><ul>
+        <li><span class="k">Required</span> for Pakistani passports. Apply at the VFS / Gerry's centre in Karachi (Bahria Complex IV).</li>
+        <li><span class="k">Fees:</span> PKR 3,700 visa fee plus about USD 50 for the appointment, per person.</li>
+        <li><span class="k">Bank statements:</span> last 3 months, bank-stamped, no older than 7 days at submission. Each of you needs funds in your own name; spouse sponsorship isn't accepted, so transfer funds with a short covering letter if needed.</li>
+        <li><span class="k">Processing:</span> about 10 calendar days. Apply 6–8 weeks before you fly with hotel bookings, return tickets and employer NOCs.</li></ul></div>
+      <div class="card"><h3>Money</h3><ul>
+        <li><span class="k">Currency:</span> South African rand. About R16.4 per US dollar.</li>
+        <li>Cards work almost everywhere; keep a little cash for tips and markets.</li>
+        <li>Tipping 10–15% at restaurants; R10–20 for car guards and petrol attendants.</li></ul></div>
+      <div class="card"><h3>Weather</h3><ul>
+        <li><span class="k">Cape Town:</span> spring, roughly 13–25°C, sunny and often windy. Bring a light jacket for evenings at Newlands.</li>
+        <li><span class="k">Johannesburg:</span> warm days around 25°C, short afternoon thunderstorms.</li>
+        <li>Strong sun: sunscreen and hats for day games.</li></ul></div>
+      <div class="card"><h3>Halal food</h3><ul>
+        <li>Cape Town has a large Cape Malay Muslim community. Bo-Kaap and the city centre are full of halal restaurants.</li>
+        <li>In Johannesburg look to Fordsburg and Mayfair; many Sandton restaurants are certified too.</li>
+        <li>Look for SANHA or MJC halal certificates on the wall.</li></ul></div>
+      <div class="card"><h3>Getting around</h3><ul>
+        <li>Uber and Bolt everywhere; cheap and the safest default after dark.</li>
+        <li>Gautrain links Johannesburg airport, Sandton and Pretoria.</li>
+        <li>Driving is on the left, like Pakistan. A Pakistani licence plus an International Driving Permit covers the Garden Route road trip.</li></ul></div>
+      <div class="card"><h3>Practical</h3><ul>
+        <li><span class="k">Time:</span> South Africa is 3 hours behind Karachi.</li>
+        <li><span class="k">Plugs:</span> type M/N (big round three-pin). Bring a universal adapter.</li>
+        <li><span class="k">SIM:</span> Vodacom or MTN at the airport, passport needed.</li>
+        <li><span class="k">Safety:</span> normal big-city care. Don't walk around CBDs after dark; keep phones out of sight in traffic.</li></ul></div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p class="eyebrow" style="margin-bottom:8px">Sources &amp; notes</p>
+    <ul>
+      <li>Fixtures, venues, Super 7 seeding and ticket prices: <a href="https://www.icc-cricket.com/tournaments/icc-cricket-world-cup-2027/news/fixture-schedule-announced-for-icc-men-s-cricket-world-cup-2027" target="_blank" rel="noopener">ICC schedule announcement, 1 Oct 2026</a>. Super 7 fixtures assume seeded teams qualify.</li>
+      <li>Hotels and prices: Booking.com searches on 1 Oct 2026 (Cape Town 4–11 Nov 2027, Sandton 8–15 Oct 2027, Knysna 9–13 Nov 2027, Gqeberha 15–17 Oct 2027). Prices move; other dates will differ.</li>
+      <li>Flight estimates: recent Karachi–Johannesburg and Cape Town–Johannesburg fares on Expedia, Skyscanner and momondo, raised for World Cup demand.</li>
+      <li>Visa: <a href="https://www.vfsglobal.com/one-pager/southafrica/pakistan/english/" target="_blank" rel="noopener">VFS Global South Africa (Pakistan)</a>.</li>
+      <li>Photos: Wikimedia Commons contributors (CC licences); hotel photos: Booking.com.</li>
+    </ul>
+  </div>
+</footer>
+<div class="mbar" id="mbar" aria-label="Trip length and total">
+  <div class="stepper"><button id="mMinus" aria-label="One night fewer">−</button><output id="mOut"></output><button id="mPlus" aria-label="One night more">+</button></div>
+  <a class="btn" href="#plan" style="padding:8px 12px;font-size:.8rem" id="mOpt">Option 1</a>
+  <div class="tot"><span>Total for 2</span><b id="mTotal" class="num"></b></div>
+</div>
+
+
+<script>
+const FX=277;
+const BOOK='?group_adults=2&no_rooms=1&group_children=0';
+const T={in:['India','in'],pk:['Pakistan','pk'],au:['Australia','au'],za:['South Africa','za'],nz:['New Zealand','nz'],af:['Afghanistan','af'],eng:['England','gb-eng'],lk:['Sri Lanka','lk'],qa:['Qualifier A',null],tbd:['TBD',null]};
+const flag=(k,lg)=>{const t=T[k];return t[1]?`<img class="flag${lg?' lg':''}" src="flags/${t[1]}.svg" alt="${t[0]} flag">`:`<span class="flag q${lg?' lg':''}" aria-label="${t[0]}">${k==='qa'?'Q':'?'}</span>`};
+const short={in:'IND',pk:'PAK',au:'AUS',za:'SA',nz:'NZ',af:'AFG',eng:'ENG',lk:'SL',qa:'QUAL A',tbd:'TBD'};
+
+const M={
+ indpak_g:{t:['in','pk'],date:'2027-10-10',venue:'The Wanderers',city:'Johannesburg',stage:'Group A',img:'wanderers',price:31.31,note:'The Bullring: home of the famous 438 run chase in 2006. Expect a sea of green and blue.'},
+ indaus:{t:['in','au'],date:'2027-10-07',venue:'Newlands',city:'Cape Town',stage:'Group A · rematch of the 2023 final',img:'hero',price:31.31,note:'The first group game of the tournament, played under the slopes of Table Mountain.'},
+ sanz:{t:['za','nz'],date:'2027-10-09',venue:'Newlands',city:'Cape Town',stage:'Group B · hosts\' opener',img:'table_mountain',price:31.31,note:'South Africa\'s first game at home. Big local crowd and a party atmosphere.'},
+ ausqa:{t:['au','qa'],date:'2027-10-12',venue:'Boland Park',city:'Paarl',stage:'Group A',img:'boland',price:15,note:'Small Winelands ground ringed by mountains, an hour from Cape Town.'},
+ indafg:{t:['in','af'],date:'2027-10-14',venue:'SuperSport Park',city:'Centurion, Tshwane',stage:'Group A',img:'supersport',price:20,note:'Grass banks and a lively crowd, 25 minutes from Sandton on the Gautrain.'},
+ saeng:{t:['za','eng'],date:'2027-10-16',venue:'St George\'s Park',city:'Gqeberha',stage:'Group B',img:'stgeorges',price:25,note:'South Africa\'s oldest Test ground, famous for its brass band playing all day.'},
+ indpak_s7:{t:['in','pk'],date:'2027-11-07',venue:'Newlands',city:'Cape Town',stage:'Super 7 · A1 v A3 seeding',img:'hero',price:31.31,note:'India are seeded A1 and Pakistan A3, so if both reach the Super 7 this is their game: a Sunday in Cape Town.'},
+ sf1:{t:['tbd','tbd'],date:'2027-11-17',venue:'Newlands',city:'Cape Town',stage:'Semi-final 1 · 1st v 4th · reserve day Thu 18 Nov',img:'table_mountain',price:31.31,note:'The Super 7 table-toppers play the 4th-placed team. Line-up known after 14 Nov.'}
+};
+
+const CITY={cpt:'Cape Town',jnb:'Johannesburg (Sandton)',kny:'Knysna',plz:'Gqeberha'};
+const H={
+ cpt:{snap:'4–11 Nov 2027',v:{n:'Urban Elephant Hotels, 16 On Bree',a:'City centre, 2.3 km from the beach',s:9.0,r:'2,358',p:98,perks:'Rooftop pool, studio with kitchenette, walk to Bo-Kaap',u:'https://www.booking.com/hotel/za/urban-elephant-16-on-bree.html'},
+  c:{n:'Hotel on the Promenade',a:'Sea Point, 150 m from the beach',s:8.9,r:'587',p:294,perks:'On the seafront promenade, sunset walks, sea views',u:'https://www.booking.com/hotel/za/cascades-on-the-promenade.html'},
+  l:{n:'POD Camps Bay',a:'Camps Bay, across from the beach',s:9.6,r:'555',p:591,perks:'Boutique 5-star, pool deck facing the Twelve Apostles',u:'https://www.booking.com/hotel/za/pod-camps-bay.html'}},
+ jnb:{snap:'8–15 Oct 2027',v:{n:'The Catalyst Apartment Hotel by NEWMARK',a:'Sandton',s:8.6,r:'6,061',p:96,perks:'Apartment-style rooms, gym, central Sandton',u:'https://www.booking.com/hotel/za/the-catalyst-newmark-hotels.html'},
+  c:{n:'Radisson Blu Gautrain Hotel',a:'Sandton, next to Gautrain station',s:8.3,r:'2,189',p:189,perks:'Train to the airport and Pretoria from the door',u:'https://www.booking.com/hotel/za/radisson-blu-gautrain.html'},
+  l:{n:'Sandton Sun and Towers',a:'Sandton, linked to Sandton City',s:8.9,r:'4,973',p:386,perks:'5-star, joined to Nelson Mandela Square and the mall',u:'https://www.booking.com/hotel/za/sandton-sun.html'}},
+ kny:{snap:'9–13 Nov 2027',v:{n:'Big Tree House Lodge',a:'Knysna',s:9.1,r:'362',p:76,perks:'Treehouse-style lodge in the forest',u:'https://www.booking.com/hotel/za/big-tree-house.html'},
+  c:{n:'Under Milkwood Resort',a:'Knysna lagoon edge',s:9.2,r:'824',p:135,perks:'Wooden chalets right on the lagoon beach',u:'https://www.booking.com/hotel/za/under-milkwood-resort.html'},
+  l:{n:'Kanonkop House',a:'Knysna, above the Heads',s:9.5,r:'139',p:376,perks:'Boutique, big views over the lagoon and Heads',u:'https://www.booking.com/hotel/za/kanonkop-house.html'}},
+ plz:{snap:'15–17 Oct 2027',v:{n:'13 on Tenth',a:'Gqeberha',s:9.2,r:'105',p:75,perks:'Small guesthouse, great value',u:'https://www.booking.com/hotel/za/13-on-tenth.html'},
+  c:{n:'Radisson Blu Hotel, Port Elizabeth',a:'Summerstrand beachfront',s:8.1,r:'2,503',p:136,perks:'Sea-facing rooms on the beachfront',u:'https://www.booking.com/hotel/za/radisson-blu-port-elizabeth.html'},
+  l:{n:'Paxton Hotel',a:'Gqeberha',s:8.4,r:'1,264',p:173,perks:'Full-service hotel close to the beachfront',u:'https://www.booking.com/hotel/za/paxton-port-elizabeth.html'}}
+};
+const TIER={v:['Value',90],c:['Comfort',140],l:['Luxury',230]}; // [label, daily spend for two USD]
+
+const X={ // extension day pools
+ jnb:[['Pretoria by Gautrain','Union Buildings and the jacaranda-lined streets, which flower purple in October and November.','union','sight'],['Constitution Hill','Old Fort prison turned Constitutional Court, then Maboneng for coffee and street art.','consthill','sight'],['Slow day in Sandton','Spa, Nelson Mandela Square and Sandton City shopping.','jhb','free']],
+ cpt:[['Robben Island','Ferry from the V&A Waterfront to Nelson Mandela\'s prison island; tours led by former prisoners.','robben','sight'],['Hermanus whale coast','Cliff path and whale watching; southern right whales are often still in Walker Bay in November.','hermanus','sight'],['Lion\'s Head sunrise','Easy-moderate hike with the whole city at your feet, then breakfast in Sea Point.','lionshead','sight'],['Franschhoek valley','Mountain views, farm lunches, chocolate and cheese tastings.','franschhoek','sight']],
+ plz:[['Addo again','A second game drive: the park has hundreds of elephants.','addo','sight'],['Beach day','Summerstrand and Sardinia Bay, then seafood on the beachfront.','stgeorges','free']]
+};
+
+// day: [date, sleepCity|null, type, title, text, img, removable 's'|'e'|'' ]
+const OPTS={
+ '1':{name:'Group-stage double',short:'IND v PAK (group) + one more match',cert:['sure','Fixture set'],certText:'India and Pakistan are both in Group A, so this match is locked in.',
+  variants:{
+   indaus:{label:'India v Australia',why:'Thu 7 Oct · Cape Town · 2023 final rematch',matches:['indaus','indpak_g'],
+    intl:{route:['KHI','CPT','JNB','KHI'],desc:'Karachi → Cape Town, home from Johannesburg',pp:900},dom:[{from:'CPT',to:'JNB',date:'2027-10-09',pp:100}],ext:'jnb',
+    days:[['2027-10-06','cpt','travel','Land in Cape Town','Overnight from Karachi via Dubai or Doha, landing early afternoon. Check in, then an evening at the V&A Waterfront.','table_mountain',''],
+     ['2027-10-07','cpt','match','MATCH: India v Australia','Uber to Newlands (about 20 minutes). The 2023 final rematch opens the group stage.','hero',''],
+     ['2027-10-08','cpt','sight','Table Mountain and Signal Hill','Cable car up in the morning while the air is clear; Camps Bay lunch; sunset from Signal Hill.','lionshead',''],
+     ['2027-10-09','jnb','travel','Bo-Kaap, then fly to Johannesburg','Morning walk through the coloured houses of Bo-Kaap with a Cape Malay lunch. Afternoon flight, 2 hours, to Sandton.','bokaap',''],
+     ['2027-10-10','jnb','match','MATCH: India v Pakistan','The Wanderers. Get there early: gates, flags, dhol drums and the loudest crowd of the tournament.','wanderers',''],
+     ['2027-10-11','jnb','sight','Apartheid Museum and Soweto','Morning at the Apartheid Museum, afternoon on Vilakazi Street, the only street with two Nobel laureates\' homes.','apartheid','e'],
+     ['2027-10-12','jnb','sight','Pilanesberg safari','Full-day guided safari in an old volcanic crater, about 2.5 hours from Sandton. Lions, elephants, rhinos and giraffes.','pilanesberg','e']]},
+   sanz:{label:'South Africa v New Zealand',why:'Sat 9 Oct · Cape Town · hosts\' opener',matches:['sanz','indpak_g'],
+    intl:{route:['KHI','CPT','JNB','KHI'],desc:'Karachi → Cape Town, home from Johannesburg',pp:900},dom:[{from:'CPT',to:'JNB',date:'2027-10-09',pp:110}],ext:'jnb',
+    warn:'Tight: you fly to Johannesburg the evening of the SA v NZ match to be at the Wanderers next morning. Book the last flight of the day, and recheck once the ICC confirms start times.',
+    days:[['2027-10-07','cpt','travel','Land in Cape Town','Overnight from Karachi via Dubai or Doha. Evening at the V&A Waterfront.','table_mountain',''],
+     ['2027-10-08','cpt','sight','Table Mountain and Camps Bay','Cable car up, lunch in Camps Bay, sunset from Signal Hill.','camps_bay',''],
+     ['2027-10-09','jnb','match','MATCH: South Africa v New Zealand','Newlands for the hosts\' first game, then the late flight to Johannesburg.','hero',''],
+     ['2027-10-10','jnb','match','MATCH: India v Pakistan','The Wanderers, the big one.','wanderers',''],
+     ['2027-10-11','jnb','sight','Apartheid Museum and Soweto','Museum in the morning, Vilakazi Street in the afternoon.','apartheid','e'],
+     ['2027-10-12','jnb','sight','Pilanesberg safari','Full-day guided safari, about 2.5 hours from Sandton.','pilanesberg','e'],
+     ['2027-10-13','jnb','sight','Pretoria by Gautrain','Union Buildings and the jacaranda streets.','union','e']]},
+   indafg:{label:'India v Afghanistan',why:'Thu 14 Oct · Tshwane · no domestic flight',matches:['indpak_g','indafg'],
+    intl:{route:['KHI','JNB','KHI'],desc:'Karachi ⇄ Johannesburg return',pp:850},dom:[],ext:'jnb',
+    days:[['2027-10-08','jnb','travel','Land in Johannesburg','Overnight from Karachi. Gautrain from the airport to Sandton in 15 minutes. Easy evening at Nelson Mandela Square.','jhb','s'],
+     ['2027-10-09','jnb','sight','Constitution Hill and Maboneng','History in the morning, coffee and street art in the afternoon.','consthill',''],
+     ['2027-10-10','jnb','match','MATCH: India v Pakistan','The Wanderers.','wanderers',''],
+     ['2027-10-11','jnb','sight','Apartheid Museum and Soweto','Museum and Vilakazi Street.','apartheid',''],
+     ['2027-10-12','jnb','sight','Pilanesberg safari','Full day in the Big Five reserve.','pilanesberg',''],
+     ['2027-10-13','jnb','sight','Pretoria and the jacarandas','Union Buildings, Church Square, purple streets.','union',''],
+     ['2027-10-14','jnb','match','MATCH: India v Afghanistan','Gautrain to Centurion, then a short walk or Uber to SuperSport Park.','supersport','']]},
+   ausqa:{label:'Australia v Qualifier A',why:'Tue 12 Oct · Paarl · Winelands ground',matches:['indpak_g','ausqa'],
+    intl:{route:['KHI','JNB','CPT','KHI'],desc:'Karachi → Johannesburg, home from Cape Town',pp:900},dom:[{from:'JNB',to:'CPT',date:'2027-10-11',pp:100}],ext:'cpt',
+    days:[['2027-10-09','jnb','travel','Land in Johannesburg','Overnight from Karachi, Gautrain to Sandton.','jhb',''],
+     ['2027-10-10','jnb','match','MATCH: India v Pakistan','The Wanderers.','wanderers',''],
+     ['2027-10-11','cpt','travel','Soweto, then fly to Cape Town','Morning in Soweto, afternoon flight to Cape Town.','soweto',''],
+     ['2027-10-12','cpt','match','MATCH: Australia v Qualifier A','Drive an hour into the Winelands to Boland Park, Paarl.','boland',''],
+     ['2027-10-13','cpt','sight','Table Mountain and V&A','Cable car, Camps Bay lunch, Waterfront evening.','table_mountain','e'],
+     ['2027-10-14','cpt','sight','Cape Point and the penguins','Chapman\'s Peak Drive, Boulders Beach, Cape of Good Hope.','boulders','e'],
+     ['2027-10-15','cpt','sight','Franschhoek valley','Farm lunches and mountain views.','franschhoek','e']]},
+   saeng:{label:'South Africa v England',why:'Sat 16 Oct · Gqeberha · Garden Route road trip',matches:['indpak_g','saeng'],
+    intl:{route:['KHI','JNB','PLZ','KHI'],desc:'Karachi → Johannesburg, home from Gqeberha (via Johannesburg)',pp:950},dom:[{from:'JNB',to:'GRJ',date:'2027-10-11',pp:120}],car:{days:6,oneWay:true,note:'Pick up in George, drop off in Gqeberha'},ext:'plz',
+    warn:'Needs 8 nights, because you can\'t safely fly out the evening of the Gqeberha match.',
+    days:[['2027-10-09','jnb','travel','Land in Johannesburg','Overnight from Karachi, Gautrain to Sandton.','jhb',''],
+     ['2027-10-10','jnb','match','MATCH: India v Pakistan','The Wanderers.','wanderers',''],
+     ['2027-10-11','kny','travel','Fly to George, drive to Knysna','2-hour flight to George, pick up the hire car, one hour along the coast to Knysna.','knysna',''],
+     ['2027-10-12','kny','sight','Knysna Heads and lagoon','Lagoon cruise out to the Heads, oysters on Thesen Island.','knysna',''],
+     ['2027-10-13','plz','travel','Tsitsikamma on the way east','Storms River Mouth suspension bridge, then on to Gqeberha (about 3 hours driving in all).','tsitsikamma',''],
+     ['2027-10-14','plz','sight','Addo Elephant Park','Self-drive or guided safari, 45 minutes from Gqeberha.','addo',''],
+     ['2027-10-15','plz','sight','Beachfront day','Summerstrand, Sardinia Bay, seafood dinner.','stgeorges',''],
+     ['2027-10-16','plz','match','MATCH: South Africa v England','St George\'s Park and its brass band.','stgeorges','']]}
+  }},
+ '2':{name:'Semi-final in Cape Town',short:'Semi-final 1 at Newlands',cert:['info','Teams TBC'],certText:'The semi-final is guaranteed. Who plays is decided when the Super 7 ends on 14 Nov.',
+  plan:{matches:['sf1'],intl:{route:['KHI','CPT','KHI'],desc:'Karachi ⇄ Cape Town return',pp:950},dom:[],ext:'cpt',
+   alt:'Semi-final 2 is the next day (Thu 18 Nov) at SuperSport Park, Tshwane. Cape Town is the better trip, so this plan uses Semi-final 1.',
+   days:[['2027-11-13','cpt','travel','Land in Cape Town','Overnight from Karachi via Dubai or Doha. Evening at the V&A Waterfront.','table_mountain','s'],
+    ['2027-11-14','cpt','sight','Table Mountain and Camps Bay','Cable car, beach lunch, sunset from Signal Hill. Last Super 7 day decides the semis.','camps_bay','s'],
+    ['2027-11-15','cpt','sight','Cape Point and the penguins','Chapman\'s Peak Drive, Boulders Beach, Cape of Good Hope.','cape_point','s'],
+    ['2027-11-16','cpt','sight','Bo-Kaap and Kirstenbosch','Cape Malay lunch, then the botanical garden\'s treetop walkway.','kirstenbosch',''],
+    ['2027-11-17','cpt','match','MATCH: Semi-final 1','Newlands. 1st v 4th of the Super 7.','hero',''],
+    ['2027-11-18','cpt','free','Reserve day, kept free','If rain stops play, the semi resumes today. If not: Robben Island ferry.','robben',''],
+    ['2027-11-19','cpt','sight','Franschhoek valley','Mountains, farms and a long lunch before flying home.','franschhoek','e']]}},
+ '3':{name:'Super 7 showdown',short:'IND v PAK Super 7 at Newlands',cert:['maybe','Needs both to qualify'],certText:'India and Pakistan must both make the Super 7 (top 3 of Group A, or the best 4th place). Confirmed on 24 Oct 2027.',
+  plan:{matches:['indpak_s7'],intl:{route:['KHI','CPT','KHI'],desc:'Karachi ⇄ Cape Town return',pp:950},dom:[],ext:'cpt',
+   days:[['2027-11-04','cpt','travel','Land in Cape Town','Overnight from Karachi via Dubai or Doha. Evening at the V&A Waterfront.','table_mountain','s'],
+    ['2027-11-05','cpt','sight','Table Mountain and Camps Bay','Cable car, beach lunch, sunset from Signal Hill.','camps_bay','s'],
+    ['2027-11-06','cpt','sight','Cape Point and the penguins','Chapman\'s Peak Drive, Boulders Beach, Cape of Good Hope.','boulders',''],
+    ['2027-11-07','cpt','match','MATCH: India v Pakistan (Super 7)','Newlands on a Sunday, Table Mountain behind the stands.','hero',''],
+    ['2027-11-08','cpt','sight','Bo-Kaap and Kirstenbosch','Cape Malay lunch and the botanical garden.','bokaap','e'],
+    ['2027-11-09','cpt','sight','Franschhoek valley','Farm lunches and mountain views.','franschhoek','e'],
+    ['2027-11-10','cpt','sight','Hermanus whale coast','Cliff path and whale watching, 90 minutes from the city.','hermanus','e']]}},
+ '4':{name:'The full house',short:'IND v PAK Super 7 + Semi-final 1',cert:['maybe','Needs both to qualify'],certText:'IND v PAK needs both teams in the Super 7; the semi-final is guaranteed. Both games are in Cape Town, 10 days apart.',
+  plan:{matches:['indpak_s7','sf1'],intl:{route:['KHI','CPT','KHI'],desc:'Karachi ⇄ Cape Town return',pp:950},dom:[],car:{days:4,oneWay:false,note:'Cape Town round trip for the Garden Route'},ext:'cpt',
+   warn:'Needs at least 12 nights: arrive the day before IND v PAK (7 Nov) and stay through the semi (17 Nov). The default flight home is 18 Nov, the semi\'s reserve day; add a night if you want that covered.',
+   days:[['2027-11-06','cpt','travel','Land in Cape Town','Overnight from Karachi. Rest up, Waterfront dinner.','table_mountain',''],
+    ['2027-11-07','cpt','match','MATCH: India v Pakistan (Super 7)','Newlands on a Sunday.','hero',''],
+    ['2027-11-08','cpt','sight','Table Mountain and Camps Bay','Cable car, beach lunch, Signal Hill sunset.','camps_bay',''],
+    ['2027-11-09','cpt','sight','Cape Point and the penguins','Chapman\'s Peak Drive, Boulders Beach, Cape of Good Hope.','boulders',''],
+    ['2027-11-10','kny','travel','Garden Route drive','Pick up a hire car and take the N2 east, about 6 hours with stops, to Knysna.','chapmans',''],
+    ['2027-11-11','kny','sight','Knysna Heads and lagoon','Lagoon cruise, forest walks, oysters on Thesen Island.','knysna',''],
+    ['2027-11-12','kny','sight','Tsitsikamma','Storms River Mouth suspension bridge and coastal trails, 1 hour away.','tsitsikamma',''],
+    ['2027-11-13','cpt','travel','Drive back to Cape Town','Back along the coast with a lunch stop in Wilderness.','knysna',''],
+    ['2027-11-14','cpt','sight','Franschhoek valley','Farm lunches and mountain views. Super 7 ends today; semi line-up set.','franschhoek',''],
+    ['2027-11-15','cpt','sight','Bo-Kaap and Kirstenbosch','Cape Malay lunch and the botanical garden.','kirstenbosch',''],
+    ['2027-11-16','cpt','sight','Robben Island and Lion\'s Head','Morning ferry, sunset hike.','robben',''],
+    ['2027-11-17','cpt','match','MATCH: Semi-final 1','Newlands. 1st v 4th of the Super 7.','hero','']]}}
+};
+
+const state={opt:'1',variant:'indaus',tier:'c',cur:'PKR',nights:{},dayF:'all',hotelF:'all'};
+try{const s=JSON.parse(localStorage.getItem('cwc27')||'{}');Object.assign(state,s)}catch(e){}
+const save=()=>{try{localStorage.setItem('cwc27',JSON.stringify(state))}catch(e){}};
+
+const D=s=>new Date(s+'T12:00:00Z');
+const iso=d=>d.toISOString().slice(0,10);
+const add=(s,n)=>{const d=D(s);d.setUTCDate(d.getUTCDate()+n);return iso(d)};
+const fmt=(s,o)=>D(s).toLocaleDateString('en-GB',Object.assign({timeZone:'UTC'},o));
+const fd=s=>fmt(s,{weekday:'short',day:'numeric',month:'short'});
+const money=(usd,cur=state.cur)=>cur==='USD'?'$'+Math.round(usd).toLocaleString('en-US'):'Rs '+(Math.round(usd*FX/1000)*1000).toLocaleString('en-US');
+const lakh=usd=>(usd*FX/100000).toFixed(1)+' lakh';
+const AP={KHI:'Karachi',CPT:'Cape Town',JNB:'Johannesburg',PLZ:'Gqeberha',GRJ:'George'};
+
+function planOf(opt,variant){const o=OPTS[opt];return o.variants?o.variants[variant||Object.keys(o.variants)[0]]:o.plan}
+function bounds(p){const d=p.days;let te=0,ts=0;for(let i=d.length-1;i>=0&&d[i][6]==='e';i--)te++;for(let i=0;i<d.length-te&&d[i][6]==='s';i++)ts++;return{def:d.length,min:d.length-te-ts,te,ts}}
+function build(p,n){
+  const b=bounds(p);n=Math.max(b.min,Math.min(21,n));
+  let days=p.days.map(d=>({date:d[0],city:d[1],type:d[2],title:d[3],text:d[4],img:d[5]}));
+  let cut=b.def-n;
+  while(cut>0&&b.te>0&&days.length){days.pop();b.te--;cut--}
+  while(cut>0){days.shift();cut--}
+  const pool=X[p.ext];let k=0;
+  while(days.length<n){const last=days[days.length-1];const e=pool[k++%pool.length];days.push({date:add(last.date,1),city:p.ext,type:e[3],title:e[0],text:e[1],img:e[2],extra:true})}
+  const dep=add(days[days.length-1].date,1);
+  return{days,n,dep,arr:days[0].date}
+}
+function stays(days){const out=[];for(const d of days){const l=out[out.length-1];if(l&&l.city===d.city)l.n++;else out.push({city:d.city,in:d.date,n:1})}out.forEach(s=>s.out=add(s.in,s.n));return out}
+function cost(p,b,tier){
+  const intl=p.intl.pp*2,dom=(p.dom||[]).reduce((a,x)=>a+x.pp*2,0);
+  const hotel=stays(b.days).reduce((a,s)=>a+s.n*H[s.city][tier].p,0);
+  const tix=p.matches.reduce((a,m)=>a+M[m].price*2,0);
+  const visa=(3700/FX+50)*2,ins=40*2,daily=b.n*TIER[tier][1];
+  const car=p.car?p.car.days*60+(p.car.oneWay?60:0):0;
+  const rows=[['Flights',intl+dom,'#2A6A9E',`International return${dom?' + domestic':''}, economy, 2 people`],['Hotels',hotel,'#176139',`${b.n} nights, ${TIER[tier][0].toLowerCase()} picks`],['Food, transport & activities',daily,'#B97D0C',`About ${money(TIER[tier][1])} a day for two`],['Match tickets',tix,'#C2416B','Top-tier ICC launch price; premium seats cost more'],['Visas',visa,'#6B5BA6','PKR 3,700 + ~USD 50 appointment each'],['Travel insurance',ins,'#5B6D62','Basic cover for two']];
+  if(car)rows.splice(3,0,['Car hire & fuel',car,'#7A8F2B',p.car.note]);
+  return{rows,total:rows.reduce((a,r)=>a+r[1],0)}
+}
+function nightsFor(opt,variant){const p=planOf(opt,variant);const key=opt+(OPTS[opt].variants?':'+variant:'');const b=bounds(p);const v=state.nights[key];return v==null?b.def:Math.max(b.min,Math.min(21,v))}
+
+function renderOpts(){
+  document.getElementById('opts').innerHTML=Object.entries(OPTS).map(([k,o])=>{
+    const p=planOf(k,k==='1'?state.variant:null);const b=build(p,nightsFor(k,k==='1'?state.variant:null));const c=cost(p,b,state.tier);
+    return `<button class="opt" aria-pressed="${state.opt===k}" data-opt="${k}">
+      <div class="top"><span class="no">${k}</span><span class="pill ${o.cert[0]}">${o.cert[1]}</span></div>
+      <div><h3>${o.name}</h3><p class="desc">${o.short}</p></div>
+      <div class="mlist">${p.matches.map(m=>{const x=M[m];return `<div class="mrow">${flag(x.t[0])}<span>${short[x.t[0]]}</span><span class="vs">v</span>${flag(x.t[1])}<span>${short[x.t[1]]}</span><span class="d">${fmt(x.date,{day:'numeric',month:'short'})}</span></div>`}).join('')}</div>
+      <p class="price">${b.n} nights · <b>${money(c.total)}</b></p></button>`}).join('');
+  document.querySelectorAll('.opt').forEach(el=>el.onclick=()=>{state.opt=el.dataset.opt;render()});
+}
+function renderVariant(){
+  const v=document.getElementById('variant');const o=OPTS[state.opt];
+  if(!o.variants){v.hidden=true;return}
+  v.hidden=false;
+  v.innerHTML=`<div><p class="eyebrow">Option 1 · pick the second match</p><p style="color:var(--muted);font-size:.92rem;margin-top:4px">All four of your teams are covered: Australia, England, India or South Africa. Each choice re-plans the route, hotels and costs.</p></div>
+  <div class="vgrid">${Object.entries(o.variants).map(([k,x])=>{const m=M[x.matches.find(id=>id!=='indpak_g')];return `<button class="vbtn" aria-pressed="${state.variant===k}" data-v="${k}"><div class="mrow">${flag(m.t[0])}<span>${short[m.t[0]]}</span><span class="vs">v</span>${flag(m.t[1])}<span>${short[m.t[1]]}</span></div><b style="font-size:.95rem">${x.label}</b><small>${x.why}</small></button>`}).join('')}</div>`;
+  v.querySelectorAll('.vbtn').forEach(el=>el.onclick=()=>{state.variant=el.dataset.v;render()});
+}
+function renderControls(p,b){
+  const bb=bounds(p);
+  document.getElementById('nOut').textContent=b.n+' nights';
+  document.getElementById('nMinus').disabled=b.n<=bb.min;
+  document.getElementById('nPlus').disabled=b.n>=21;document.getElementById('mOut').textContent=b.n+' nights';document.getElementById('mMinus').disabled=b.n<=bb.min;document.getElementById('mPlus').disabled=b.n>=21;
+  document.getElementById('minNote').textContent=bb.min===bb.def?`minimum ${bb.min} for this plan`:`min ${bb.min} · default ${bb.def}`;
+  document.getElementById('tierSeg').innerHTML=Object.entries(TIER).map(([k,t])=>`<button aria-pressed="${state.tier===k}" data-t="${k}">${t[0]}</button>`).join('');
+  document.querySelectorAll('#tierSeg button').forEach(el=>el.onclick=()=>{state.tier=el.dataset.t;render()});
+  document.getElementById('curSeg').innerHTML=['PKR','USD'].map(c=>`<button aria-pressed="${state.cur===c}" data-c="${c}">${c}</button>`).join('');
+  document.querySelectorAll('#curSeg button').forEach(el=>el.onclick=()=>{state.cur=el.dataset.c;render()});
+}
+function setNights(delta){const p=planOf(state.opt,state.variant);const key=state.opt+(OPTS[state.opt].variants?':'+state.variant:'');state.nights[key]=nightsFor(state.opt,state.variant)+delta;render()}
+document.getElementById('nMinus').onclick=()=>setNights(-1);
+document.getElementById('nPlus').onclick=()=>setNights(1);
+document.getElementById('mMinus').onclick=()=>setNights(-1);
+document.getElementById('mPlus').onclick=()=>setNights(1);
+
+function renderSummary(o,p,b,c){
+  const st=stays(b.days);
+  const route=[ 'Karachi',...st.map(s=>`${CITY[s.city].replace(' (Sandton)','')} · ${s.n}n`),'Karachi'];
+  document.getElementById('summary').innerHTML=`<div class="card fade">
+    <p class="eyebrow">Option ${state.opt} · ${o.name}</p>
+    <h2 style="font-size:clamp(2rem,4.5vw,2.8rem);margin-top:6px">${fd(b.arr)} – ${fd(b.dep)} 2027</h2>
+    <div class="route">${route.map((r,i)=>`<span class="stop">${r}</span>${i<route.length-1?'<span class="arr">→</span>':''}`).join('')}</div>
+    <div class="facts">
+      <div class="fact"><div class="v num">${b.n}</div><div class="k">nights in South Africa</div></div>
+      <div class="fact"><div class="v num">${p.matches.length}</div><div class="k">match${p.matches.length>1?'es':''}</div></div>
+      <div class="fact"><div class="v num">${new Set(st.map(s=>s.city)).size}</div><div class="k">cit${new Set(st.map(s=>s.city)).size>1?'ies':'y'}</div></div>
+      <div class="fact"><div class="v num">${money(c.total)}</div><div class="k">all-in for two${state.cur==='PKR'?' · '+lakh(c.total):''}</div></div>
+    </div>
+    ${p.warn?`<div class="alert warn"><b>Note</b><span>${p.warn}</span></div>`:''}
+    ${p.alt?`<div class="alert gold"><b>Also</b><span>${p.alt}</span></div>`:''}
+  </div>
+  <div class="card fade" style="display:grid;gap:12px;align-content:start">
+    <p class="eyebrow">How sure is this fixture?</p>
+    <span class="pill ${o.cert[0]}" style="justify-self:start">${o.cert[1]}</span>
+    <p>${o.certText}</p>
+    <p style="color:var(--muted);font-size:.9rem">Book hotels with free cancellation and flexible fares, so the plan can bend if the Super 7 line-up changes.</p>
+    <div class="links"><a class="btn" href="#days">See the day-by-day</a><a class="btn" href="#money">See costs</a></div>
+  </div>`;
+  document.getElementById('chipTotal').textContent=money(c.total);document.getElementById('mTotal').textContent=money(c.total);document.getElementById('mOpt').textContent='Option '+state.opt;
+}
+function renderTickets(p){
+  document.getElementById('tickets').innerHTML=p.matches.map(id=>{const m=M[id];return `<article class="ticket fade">
+    <div class="main"><div class="pic"><img src="img/${m.img}.jpg" alt="${m.venue}, ${m.city}" loading="lazy"></div>
+      <div class="body"><span class="eyebrow">${m.stage}</span>
+        <div class="vsrow">${flag(m.t[0],1)}<span class="nm">${T[m.t[0]][0]}</span><span class="v">v</span>${flag(m.t[1],1)}<span class="nm">${T[m.t[1]][0]}</span></div>
+        <p class="meta"><b style="color:var(--ink)">${m.venue}, ${m.city}</b> · 50-over ODI</p>
+        <p class="meta">${m.note}</p></div></div>
+    <div class="stub"><span class="day">${fmt(m.date,{weekday:'long'})}</span><span class="date num">${fmt(m.date,{day:'numeric'})} ${fmt(m.date,{month:'short'}).toUpperCase()}</span><span class="p">2027 · Start time TBC</span><span class="p">From ${money(m.price)} a seat</span></div>
+  </article>`}).join('');
+}
+function renderFlights(p,b){
+  const r=p.intl.route;const out=[r[0],r[1]],back=[r[r.length-2],r[r.length-1]];
+  const gf=(a,z,d)=>`https://www.google.com/travel/flights?q=${encodeURIComponent(`one way flights from ${a} to ${z} on ${d} 2 adults`)}`;
+  let h=`<div class="card leg fade"><p class="eyebrow">Outbound · ${fd(add(b.arr,-1))} night</p>
+    <div class="path"><span>${out[0]}</span><span class="line"></span><span>${out[1]}</span></div>
+    <dl><dt>Route</dt><dd>${AP[out[0]]} → ${AP[out[1]]}, one stop</dd><dt>Airlines</dt><dd>Emirates (Dubai), Qatar (Doha), Ethiopian (Addis), Turkish (Istanbul)</dd><dt>Time</dt><dd>About 14–18 hours door to door</dd><dt>Arrive</dt><dd>${fd(b.arr)}, around midday</dd></dl></div>
+   <div class="card leg fade"><p class="eyebrow">Home · ${fd(b.dep)}</p>
+    <div class="path"><span>${back[0]}</span><span class="line"></span><span>${back[1]}</span></div>
+    <dl><dt>Route</dt><dd>${AP[back[0]]} → Karachi${back[0]==='PLZ'?' via Johannesburg':''}</dd><dt>Leave</dt><dd>${fd(b.dep)}, afternoon or evening</dd><dt>Land</dt><dd>Karachi next morning</dd><dt>Estimate</dt><dd>${money(p.intl.pp)} per person return${state.cur==='PKR'?' · '+money(p.intl.pp*2)+' for two':''}</dd></dl>
+    <div class="links"><a class="btn solid" href="${gf(AP[out[0]],AP[out[1]],b.arr)}" target="_blank" rel="noopener">Search fares</a><a class="btn" href="https://www.emirates.com/pk/english/" target="_blank" rel="noopener">Emirates</a><a class="btn" href="https://www.qatarairways.com/en-pk/homepage.html" target="_blank" rel="noopener">Qatar</a></div></div>`;
+  (p.dom||[]).forEach(d=>{h+=`<div class="card leg fade"><p class="eyebrow">Domestic · ${fd(d.date)}</p>
+    <div class="path"><span>${d.from}</span><span class="line"></span><span>${d.to}</span></div>
+    <dl><dt>Route</dt><dd>${AP[d.from]} → ${AP[d.to]}, nonstop</dd><dt>Airlines</dt><dd>FlySafair, Airlink${d.to==='JNB'||d.to==='CPT'?', Lift, SAA':''}</dd><dt>Time</dt><dd>About 2 hours</dd><dt>Estimate</dt><dd>${money(d.pp)} per person, with a bag</dd></dl>
+    <div class="links"><a class="btn" href="https://www.flysafair.co.za/" target="_blank" rel="noopener">FlySafair</a><a class="btn" href="https://www.flyairlink.com/" target="_blank" rel="noopener">Airlink</a></div></div>`});
+  if(p.car)h+=`<div class="card leg fade"><p class="eyebrow">Road trip</p><div class="path"><span>Car</span><span class="line"></span><span>${p.car.days} days</span></div><dl><dt>Plan</dt><dd>${p.car.note}</dd><dt>Estimate</dt><dd>${money(p.car.days*60+(p.car.oneWay?60:0))} incl. fuel${p.car.oneWay?' and one-way fee':''}</dd><dt>Book</dt><dd>Booking.com Car rental, Avis, Hertz</dd></dl><div class="links"><a class="btn" href="https://www.booking.com/cars/" target="_blank" rel="noopener">Booking.com cars</a></div></div>`;
+  document.getElementById('flights').innerHTML=h;
+}
+function renderHotels(b){
+  const f=document.getElementById('hotelFilter');
+  f.innerHTML=[['all','All three levels'],['sel','Only my level']].map(([k,l])=>`<button class="chip" aria-pressed="${state.hotelF===k}" data-h="${k}">${l}</button>`).join('');
+  f.querySelectorAll('.chip').forEach(el=>el.onclick=()=>{state.hotelF=el.dataset.h;render()});
+  document.getElementById('hotels').innerHTML=stays(b.days).map(s=>{const c=H[s.city];
+    const tiers=Object.keys(TIER).filter(t=>state.hotelF==='all'||t===state.tier);
+    return `<div class="citybar"><h3>${CITY[s.city]}</h3><span class="mono">${fd(s.in)} → ${fd(s.out)} · ${s.n} night${s.n>1?'s':''}</span></div>
+    <div class="hotels" ${tiers.length===1?'style="grid-template-columns:minmax(0,1fr)"':''}>${tiers.map(t=>{const x=c[t];const on=t===state.tier;
+      return `<article class="hotel fade ${on?'on':(state.hotelF==='all'?'':'')}">
+      <div class="ph"><img src="img/h_${s.city}_${t}.jpg" alt="${x.n}" loading="lazy"><span class="tier">${TIER[t][0]}</span><span class="score-b">${x.s.toFixed(1)}</span></div>
+      <div class="hb"><span class="nm">${x.n}</span><span class="area">${x.a} · ${x.r} reviews</span><span class="perks">${x.perks}</span>
+      <div class="pr"><div><span class="n">per night</span><b>${money(x.p)}</b></div><div style="text-align:right"><span class="n">${s.n} night${s.n>1?'s':''}</span><b>${money(x.p*s.n)}</b></div></div>
+      ${on?'<span class="sel">✓ Used in your total</span>':`<button class="btn" style="justify-self:start;padding:5px 11px;font-size:.8rem" data-pick="${t}">Use ${TIER[t][0].toLowerCase()} level</button>`}
+      <a class="btn solid" style="justify-self:start" href="${x.u}${BOOK}&checkin=${s.in}&checkout=${s.out}&selected_currency=USD" target="_blank" rel="noopener">Check on Booking.com</a></div></article>`}).join('')}</div>
+    <p class="mono" style="font-size:.72rem;color:var(--muted);margin-top:8px">Booking.com snapshot for ${c.snap}</p>`}).join('');
+  document.querySelectorAll('[data-pick]').forEach(el=>el.onclick=()=>{state.tier=el.dataset.pick;render()});
+}
+const TYPES={all:['All days',null],match:['Matchdays','var(--gold)'],sight:['Sightseeing','var(--pitch)'],travel:['Travel days','var(--sky)'],free:['Free days','var(--muted)']};
+function renderDays(b){
+  const f=document.getElementById('dayFilter');
+  f.innerHTML=Object.entries(TYPES).map(([k,[l,c]])=>{const n=k==='all'?b.days.length:b.days.filter(d=>d.type===k).length;return n||k==='all'?`<button class="chip" aria-pressed="${state.dayF===k}" data-f="${k}">${c?`<span class="dot" style="background:${c}"></span>`:''}${l} <span class="mono" style="opacity:.6">${n}</span></button>`:''}).join('');
+  f.querySelectorAll('.chip').forEach(el=>el.onclick=()=>{state.dayF=el.dataset.f;render()});
+  const all=[...b.days.map((d,i)=>({...d,i:i+1})),{date:b.dep,city:null,type:'travel',title:'Fly home',text:'Check out and head to the airport. Land in Karachi the next morning.',img:'jhb',i:b.days.length+1}];
+  const tag={match:'Matchday',sight:'Sightseeing',travel:'Travel',free:'Free day'};
+  document.getElementById('days').innerHTML=all.filter(d=>state.dayF==='all'||d.type===state.dayF).map(d=>`<article class="day t-${d.type} ${d.extra?'extra':''} fade">
+    <div class="when"><span class="n">Day ${d.i}</span><span class="dd num">${fmt(d.date,{day:'numeric'})}</span><span class="mm">${fmt(d.date,{weekday:'short'})} · ${fmt(d.date,{month:'short'})}</span></div>
+    <div class="what"><span class="tag">${tag[d.type]}${d.extra?' · added night':''}</span><span class="tt">${d.title}</span><p>${d.text}</p>${d.city?`<span class="sleep">Sleep: ${CITY[d.city]}</span>`:''}</div>
+    <div class="ph"><img src="img/${d.img}.jpg" alt="" loading="lazy"></div></article>`).join('');
+}
+function renderMoney(c){
+  const pk=state.cur==='PKR';
+  document.getElementById('money').innerHTML=`<div class="card fade"><p class="eyebrow">Estimated total for two</p>
+    <div class="big num">${money(c.total)}</div><p style="color:var(--muted)">${pk?lakh(c.total)+' · ≈ '+money(c.total,'USD'):'≈ '+money(c.total,'PKR')} · ${money(c.total/2)} each</p>
+    <div class="bar">${c.rows.map(r=>`<span style="width:${r[1]/c.total*100}%;background:${r[2]}" title="${r[0]}"></span>`).join('')}</div>
+    <table class="costs">${c.rows.map(r=>`<tr><td><span class="sw" style="background:${r[2]}"></span>${r[0]}<small>${r[3]}</small></td><td>${money(r[1])}</td></tr>`).join('')}<tr class="tot"><td>Total</td><td>${money(c.total)}</td></tr></table></div>
+  <div class="card fade" style="display:grid;gap:14px;align-content:start"><p class="eyebrow">Where you can save</p>
+    <div class="alert ok"><span>Switch hotels to <b>Value</b>: the city-centre and Sandton picks score 8.6–9.0 on Booking.com for a third of the price.</span></div>
+    <div class="alert ok"><span>Book flights as soon as late-2027 fares open (around Oct–Nov 2026). World Cup weeks fill fast from India, the UK and Australia.</span></div>
+    <div class="alert gold"><span>Cape Town was already tight: when we searched 4–11 Nov 2027 on Booking.com, <b>74% of places showed as unavailable</b>. Lock in a free-cancellation room now.</span></div></div>`;
+}
+function renderCompare(){
+  document.getElementById('cmpBody').innerHTML=Object.entries(OPTS).map(([k,o])=>{const v=k==='1'?state.variant:null;const p=planOf(k,v);const b=build(p,bounds(p).def);const c=cost(p,b,state.tier);
+    return `<tr class="${state.opt===k?'cur':''}" data-opt="${k}" tabindex="0"><td><b>${k}. ${o.name}</b></td><td><div class="flags">${p.matches.map(m=>flag(M[m].t[0])+flag(M[m].t[1])).join('<span style="width:8px"></span>')}</div></td><td class="num">${fmt(b.arr,{day:'numeric',month:'short'})} – ${fmt(b.dep,{day:'numeric',month:'short'})}</td><td class="num">${b.n}</td><td>${[...new Set(stays(b.days).map(s=>CITY[s.city].replace(' (Sandton)','')))].join(', ')}</td><td><span class="pill ${o.cert[0]}">${o.cert[1]}</span></td><td class="r"><b>${money(c.total)}</b></td></tr>`}).join('');
+  document.querySelectorAll('#cmpBody tr').forEach(el=>{const go=()=>{state.opt=el.dataset.opt;render();document.getElementById('plan').scrollIntoView({behavior:'smooth'})};el.onclick=go;el.onkeydown=e=>{if(e.key==='Enter')go()}});
+
+  document.getElementById('cmpCards').innerHTML=Object.entries(OPTS).map(([k,o])=>{const v=k==='1'?state.variant:null;const p=planOf(k,v);const b=build(p,bounds(p).def);const c=cost(p,b,state.tier);
+    return `<button class="cmp-card ${state.opt===k?'cur':''}" data-opt="${k}"><div class="r1"><b>${k}. ${o.name}</b><span class="pill ${o.cert[0]}">${o.cert[1]}</span></div>
+    <div class="r1"><div class="flags" style="display:flex;gap:4px">${p.matches.map(m=>flag(M[m].t[0])+flag(M[m].t[1])).join('<span style="width:6px"></span>')}</div><span class="t">${money(c.total)}</span></div>
+    <div class="r2"><span>${fmt(b.arr,{day:'numeric',month:'short'})} – ${fmt(b.dep,{day:'numeric',month:'short'})} · ${b.n} nights</span><span>${[...new Set(stays(b.days).map(s=>CITY[s.city].replace(' (Sandton)','')))].join(', ')}</span></div></button>`}).join('');
+  document.querySelectorAll('.cmp-card').forEach(el=>el.onclick=()=>{state.opt=el.dataset.opt;render();document.getElementById('plan').scrollIntoView({behavior:'smooth'})});
+}
+function renderTimeline(p,b){
+  const visa=add(b.arr,-56);
+  const steps=[['Now · Oct 2026','Register for the ICC ticket ballot','Each of you can register at tickets.cricketworldcup.com. Ballot entries open today.',1],
+   ['Now · Oct 2026','Reserve refundable hotels','Use the Booking.com buttons above and pick free-cancellation rates. Nothing is charged until closer to the date on most of them.',1],
+   ['Oct–Nov 2026','Book flights when they open','Set price alerts for Karachi → '+AP[p.intl.route[1]]+' around '+fd(add(b.arr,-1))+'. Choose a fare that allows date changes.',0],
+   ['When results land','Ticket ballot results','If you miss out, watch for the ICC\'s later general-sale and resale phases.',0],
+   [fmt(visa,{day:'numeric',month:'short',year:'numeric'}),'Apply for visas','About 8 weeks before you fly. Bank statements must be no older than 7 days when you submit.',0],
+   ...(p.matches.some(m=>m==='indpak_s7')?[['24 Oct 2027','Super 7 line-up confirmed','Group stage ends. If India or Pakistan miss out, switch to Option 1-style plans or cancel the refundable bookings.',0]]:[]),
+   [fmt(add(b.arr,-7),{day:'numeric',month:'short',year:'numeric'}),'Final week','Travel insurance, eSIM, a few thousand rand in cash, adapters, and match tickets on your phone.',0],
+   [fd(b.arr)+' 2027','Fly to South Africa','Enjoy it.',0]];
+  document.getElementById('timeline').innerHTML=steps.map(s=>`<div class="st ${s[3]?'now':''}"><span class="wh">${s[0]}</span><span class="dot"><i></i></span><div><b>${s[1]}</b><p>${s[2]}</p></div></div>`).join('');
+}
+let cdTimer;
+function renderCountdown(p){
+  const m=M[p.matches.find(x=>x.startsWith('indpak'))||p.matches[0]];
+  document.getElementById('cdTeams').innerHTML=`${flag(m.t[0])}<span>${short[m.t[0]]}</span><span style="opacity:.6;font-size:1rem">v</span>${flag(m.t[1])}<span>${short[m.t[1]]}</span>`;
+  document.getElementById('cdWhere').textContent=`${fd(m.date)} 2027 · ${m.venue}, ${m.city}`;
+  const target=new Date(m.date+'T08:00:00Z').getTime();
+  const tick=()=>{let s=Math.max(0,(target-Date.now())/1000);const d=Math.floor(s/86400);s-=d*86400;const h=Math.floor(s/3600);s-=h*3600;const mi=Math.floor(s/60);const se=Math.floor(s-mi*60);
+    document.getElementById('cd').innerHTML=[[d,'days'],[h,'hrs'],[mi,'min'],[se,'sec']].map(([v,l])=>`<div><b class="num">${String(v).padStart(l==='days'?3:2,'0')}</b><span>${l}</span></div>`).join('')};
+  clearInterval(cdTimer);tick();cdTimer=setInterval(tick,1000);
+}
+function render(){
+  if(!OPTS['1'].variants[state.variant])state.variant='indaus';
+  if(!OPTS[state.opt])state.opt='1';
+  const o=OPTS[state.opt];const p=planOf(state.opt,state.variant);const b=build(p,nightsFor(state.opt,state.variant));const c=cost(p,b,state.tier);
+  renderOpts();renderVariant();renderControls(p,b);renderSummary(o,p,b,c);renderTickets(p);renderFlights(p,b);renderHotels(b);renderDays(b);renderMoney(c);renderCompare();renderTimeline(p,b);renderCountdown(p);
+  save();
+}
+document.getElementById('days').id='days';
+render();
+
+/* ---------- Welcome popup ---------- */
+(function(){
+  const gate=document.getElementById('gate'),box=document.getElementById('gateBox');
+  const html=document.documentElement;html.classList.add('locked');
+  const STEPS=[
+    {emo:'🥺💍',h:'Would you like to take your wife on a beautiful trip of her dreams?',p:'Cricket World Cup 2027. Cape Town. Table Mountain. Penguins. Her. 🏏💚',yes:'Yes, I would love to 😍',no:'No, I don’t like my wife'},
+    {emo:'😢',h:'Are you sure?',p:'She made you a whole website. With flags. And a countdown.',yes:'Okay okay, YES 💚',no:'Yes, I’m sure'},
+    {emo:'😭',h:'Are you really, <i>really</i> sure?',p:'India v Pakistan. Front-row seats to her happiness. And penguins. PENGUINS.',yes:'Fine, I love her. YES 🥹',no:'Still no'},
+    {emo:'💔😭💔',h:'Last chance… are you SURE sure?',p:'She is sitting right next to you. Reading this. Crying in Bo-Kaap colours.',yes:'I take it back! YES!!! 💍✨',no:'Yes. Final answer.'}
+  ];
+  let i=0;
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function burst(chars,n,rain){const b=document.createElement('div');b.className='burst'+(rain?' rain':'');
+    for(let k=0;k<n;k++){const s=document.createElement('span');s.textContent=chars[k%chars.length];
+      if(rain){s.style.left=Math.random()*100+'vw';s.style.top='-5vh';s.style.animationDelay=(Math.random()*3)+'s';s.style.fontSize=(1.2+Math.random()*1.6)+'rem'}
+      else{s.style.left='50%';s.style.top='45%';s.style.setProperty('--x',(Math.random()*120-60)+'vw');s.style.setProperty('--y',(Math.random()*120-70)+'vh');s.style.setProperty('--r',(Math.random()*720-360)+'deg');s.style.animationDelay=(Math.random()*.25)+'s'}
+      b.appendChild(s)}
+    if(!reduce)document.body.appendChild(b);if(!rain)setTimeout(()=>b.remove(),2400);return b}
+  function show(){const st=STEPS[i];
+    box.className='box';void box.offsetWidth;if(i>0)box.classList.add('shake');
+    box.innerHTML=`<div class="emo" aria-hidden="true">${st.emo}</div><h2 id="gateTitle">${st.h}</h2><p>${st.p}</p>
+      <div class="btns"><button class="yes" id="gYes" style="transform:scale(${1+i*0.09})">${st.yes}</button><button class="no" id="gNo" style="font-size:${1-i*0.1}rem">${st.no}</button></div>`;
+    document.getElementById('gYes').onclick=yes;document.getElementById('gNo').onclick=no;document.getElementById('gYes').focus({preventScroll:true})}
+  function yes(){box.className='box';box.innerHTML=`<div class="emo">🥳💚</div><h2 id="gateTitle">Best. Husband. Ever.</h2><p>Opening your trip…</p>`;
+    burst(['💚','❤️','🏏','✨','💍','🎉'],60);
+    setTimeout(()=>{gate.classList.add('out');html.classList.remove('locked');setTimeout(()=>gate.remove(),550)},1500)}
+  function no(){i++;if(i<STEPS.length){show();return}
+    box.className='box bye';
+    box.innerHTML=`<div class="emo" aria-hidden="true">👋💅✨</div><h2 id="gateTitle">Bye-eee!</h2>
+      <p><b style="color:var(--ink)">Off you go then, darling.</b> This website is now closed to you. Enjoy the sofa, the remote and your own lovely company. Mwah! 💋</p>
+      <p class="tiny">Refresh the page when you’re ready to apologise 🙏</p>`;
+    burst(['✨','💅','🪩','💔','👋','💋','⭐'],46,true)}
+  show();
+})();
+</script>
+
+</body>
+</html>
